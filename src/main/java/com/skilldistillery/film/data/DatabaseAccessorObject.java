@@ -9,9 +9,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
+@Component
 public class DatabaseAccessorObject implements DatabaseAccessor {
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
 	private static final String USER = "student";
@@ -262,18 +265,18 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
-			
+
 			conn.setAutoCommit(false); // START TRANSACTION
-			
+
 			String sql = "UPDATE actor SET first_name=?, last_name=? " + " WHERE id=?";
-			
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, actor.getFirstName());
 			stmt.setString(2, actor.getLastName());
 			stmt.setInt(3, actor.getId());
-			
+
 			int updateCount = stmt.executeUpdate();
-			
+
 			if (updateCount == 1) {
 				// Replace actor's film list
 				sql = "DELETE FROM film_actor WHERE actor_id = ?";
@@ -410,18 +413,18 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
-			
+
 			conn.setAutoCommit(false); // START TRANSACTION
-			
+
 			String sql = "UPDATE film SET title=?, language=? " + " WHERE id=?";
-			
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getLanguage());
 			stmt.setInt(3, film.getFilmId());
-			
+
 			int updateCount = stmt.executeUpdate();
-			
+
 			if (updateCount == 1) {
 				// Replace actor's film list
 				sql = "DELETE FROM film WHERE id = ?";
@@ -457,28 +460,28 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean deleteFilm(Film film) {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
-			
+
 			conn.setAutoCommit(false); // START TRANSACTION
-			
+
 			String sql = "DELETE FROM film_actor WHERE film_id = ?";
-			
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, film.getFilmId());
-			
+
 			int updateCount = stmt.executeUpdate();
-			
+
 			sql = "DELETE FROM film WHERE id = ?";
-			
+
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, film.getFilmId());
 			updateCount = stmt.executeUpdate();
-			
+
 			conn.commit(); // COMMIT TRANSACTION
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
