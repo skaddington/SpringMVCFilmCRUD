@@ -398,10 +398,18 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			conn = DriverManager.getConnection(URL, USER, PASS);
 			conn.setAutoCommit(false); // START TRANSACTION
 
-			String sql = "INSERT INTO film (title, language_id) " + " VALUES (?, 1)";
+			String sql = "INSERT INTO film (title, description, release_year, language_id, rental_Duration, rental_Rate, length, replacement_cost, rating) " + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+			stmt.setInt(3, film.getReleaseYear());
+			stmt.setString(4, film.getLanguage());
+			stmt.setInt(5, film.getRentalDuration());
+			stmt.setDouble(6, film.getRentalRate());
+			stmt.setInt(7, film.getLength());
+			stmt.setDouble(8, film.getReplacementCost());
+			stmt.setString(9, film.getRating());
 
 			int updateCount = stmt.executeUpdate();
 
@@ -409,6 +417,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				conn.commit(); // COMMIT TRANSACTION
 				ResultSet keys = stmt.getGeneratedKeys();
 				if (keys.next()) {
+					System.out.println("Added new film to db");
 					film.setFilmId(keys.getInt(1));
 					System.out.println(film);
 //					if (film.getActors() != null && film.getActors().size() > 0) {

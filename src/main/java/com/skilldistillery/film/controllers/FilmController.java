@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.skilldistillery.advancedrequesthandling.data.State;
 import com.skilldistillery.film.data.DatabaseAccessor;
 import com.skilldistillery.film.entities.Film;
 
@@ -42,7 +44,22 @@ public class FilmController {
 		mv.addObject("films", filmList);
 		return mv;
 	}
+
+	@RequestMapping( path = "AddFilm.do", method = RequestMethod.GET)
+	public ModelAndView addFilm(Film film, RedirectAttributes redir) {
+		dao.createFilm(film);
+		redir.addFlashAttribute("film", film);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:filmAdded.do");
+		return mv;
+	}
 	
+	@RequestMapping(path="filmAdded.do", method=RequestMethod.GET)
+	  public ModelAndView filmAdded(Film film) {
+		  ModelAndView mv = new ModelAndView();
+		  mv.setViewName("WEB-INF/singleFilm.jsp");
+		  return mv;
+	  }	
 //	@RequestMapping("GetNumbers.do")
 //	public ModelAndView getNumbers(@RequestParam("howmany") int count) {
 //		hopper.reset();

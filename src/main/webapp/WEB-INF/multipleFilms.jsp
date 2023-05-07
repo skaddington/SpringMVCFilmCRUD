@@ -25,8 +25,8 @@
 					<li>${film.rating}</li>
 					<li>${film.specialFeatures}</li>
  					<li>${film.actors}</li>
-					<br>
  				</ul>
+					<br>
 			</c:forEach>
 		</ul>
 
