@@ -26,7 +26,9 @@
 					<li>${film.replacementCost}</li>
 					<li>${film.rating}</li>
 					<li>${film.specialFeatures}</li>
+					<%-- <c:when test="${!empty actors }">
 					<li>${film.actors}</li>
+					</c:when> --%>
 				</ul>
 		</c:when>
 		<c:otherwise>
@@ -35,6 +37,8 @@
 	</c:choose>
 
 	<p>
+	<a href="editFilm.html" class="btn btn-secondary" role="button">Edit this film</a><br>
+	<a href="deleteFilm.html" class="btn btn-secondary" role="button">Delete this film</a><br>
 		<a href="index.html" class="btn btn-secondary" role="button">Back
 			to Home</a>
 	</p>

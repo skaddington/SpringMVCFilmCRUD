@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.skilldistillery.advancedrequesthandling.data.State;
 import com.skilldistillery.film.data.DatabaseAccessor;
 import com.skilldistillery.film.entities.Film;
 
@@ -60,6 +59,40 @@ public class FilmController {
 		  mv.setViewName("WEB-INF/singleFilm.jsp");
 		  return mv;
 	  }	
+	
+	@RequestMapping( path = "EditFilm.do", method = RequestMethod.GET)
+	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
+		dao.saveFilm(film);
+		redir.addFlashAttribute("film", film);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:filmUpdated.do");
+		return mv;
+	}
+	
+	@RequestMapping(path="filmUpdated.do", method=RequestMethod.GET)
+	  public ModelAndView filmUpdated(Film film) {
+		  ModelAndView mv = new ModelAndView();
+		  mv.setViewName("WEB-INF/singleFilm.jsp");
+		  return mv;
+	  }
+	
+	@RequestMapping( path = "DeleteFilm.do", method = RequestMethod.GET)
+	public ModelAndView deleteFilm(Film film, RedirectAttributes redir) {
+		dao.deleteFilm(film);
+		redir.addFlashAttribute("film", film);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:filmDeleted.do");
+		return mv;
+	}
+	
+	@RequestMapping(path="filmDeleted.do", method=RequestMethod.GET)
+	  public ModelAndView filmDeleted(Film film) {
+		  ModelAndView mv = new ModelAndView();
+		  mv.setViewName("WEB-INF/singleFilm.jsp");
+		  return mv;
+	  }
+	
+	
 //	@RequestMapping("GetNumbers.do")
 //	public ModelAndView getNumbers(@RequestParam("howmany") int count) {
 //		hopper.reset();

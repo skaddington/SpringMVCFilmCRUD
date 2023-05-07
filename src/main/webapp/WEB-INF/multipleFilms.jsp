@@ -24,7 +24,7 @@
 					<li>${film.replacementCost}</li>
 					<li>${film.rating}</li>
 					<li>${film.specialFeatures}</li>
- 					<li>${film.actors}</li>
+ 					<%-- <li>${film.actors}</li> --%>
  				</ul>
 					<br>
 			</c:forEach>

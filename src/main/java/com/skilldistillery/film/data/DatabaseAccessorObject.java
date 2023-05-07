@@ -418,8 +418,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				ResultSet keys = stmt.getGeneratedKeys();
 				if (keys.next()) {
 					System.out.println("Added new film to db");
-					film.setFilmId(keys.getInt(1));
-					System.out.println(film);
+					int newFilmId = keys.getInt(1);
+//					film.setFilmId(keys.getInt(1));
+//					System.out.println(film);
+					film.setFilmId(newFilmId);
 //					if (film.getActors() != null && film.getActors().size() > 0) {
 //						sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
 //						stmt = conn.prepareStatement(sql);
@@ -428,7 +430,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 //							stmt.setInt(2, actor.getId());
 //							updateCount = stmt.executeUpdate();
 //						}
-//					}
+					
 				}
 				keys.close();
 			} else {
@@ -462,12 +464,18 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 			conn.setAutoCommit(false); // START TRANSACTION
 
-			String sql = "UPDATE film SET title=?, language=? " + " WHERE id=?";
+			String sql = "UPDATE film SET title=?, description=?, release_year=?, language=?, rental_duration=?, rental_rate=?, length=?, replacement_cost=?, rating=?" + " WHERE id=?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, film.getTitle());
-			stmt.setString(2, film.getLanguage());
-			stmt.setInt(3, film.getFilmId());
+			stmt.setString(2, film.getDescription());
+			stmt.setInt(3, film.getReleaseYear());
+			stmt.setString(4, film.getLanguage());
+			stmt.setInt(5, film.getRentalDuration());
+			stmt.setDouble(6, film.getRentalRate());
+			stmt.setInt(7, film.getLength());
+			stmt.setDouble(8, film.getReplacementCost());
+			stmt.setString(9, film.getRating());
 
 			int updateCount = stmt.executeUpdate();
 
@@ -479,9 +487,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				updateCount = stmt.executeUpdate();
 				sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
 				stmt = conn.prepareStatement(sql);
-				for (Film film : actor.getFilms()) {
-					stmt.setInt(1, film.getFilmId());
-					stmt.setInt(2, actor.getId());
+				for (Actor actor : film.getActors()) {
+					stmt.setInt(1, actor.getId());
+					stmt.setInt(2, film.getFilmId());
 					updateCount = stmt.executeUpdate();
 				}
 				conn.commit(); // COMMIT TRANSACTION
