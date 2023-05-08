@@ -53,7 +53,7 @@ public class FilmController {
 		  return mv;
 	  }	
 	
-	@RequestMapping( path = "EditFilm.do", method = RequestMethod.GET)
+	@RequestMapping( path = "editFilm.do", method = RequestMethod.GET)
 	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
 		dao.saveFilm(film);
 		redir.addFlashAttribute("film", film);
@@ -65,7 +65,7 @@ public class FilmController {
 	@RequestMapping(path="filmUpdated.do", method=RequestMethod.GET)
 	  public ModelAndView filmUpdated(Film film) {
 		  ModelAndView mv = new ModelAndView();
-		  mv.setViewName("WEB-INF/editFilm.jsp");
+		  mv.setViewName("WEB-INF/updatedFilm.jsp");
 		  return mv;
 	  }
 	
