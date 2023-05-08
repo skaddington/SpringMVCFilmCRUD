@@ -10,30 +10,28 @@
 </head>
 <body>
 	<div class="container">
-		<ul>
-			<c:forEach var="film" items="${films }">
-				<ul>
-					<li>${film.filmId}</li>
-					<li>${film.title}</li>
-					<li>${film.description}</li>
-					<li>${film.releaseYear}</li>
-					<li>${film.language}</li>
-					<li>${film.rentalDuration}</li>
-					<li>${film.rentalRate}</li>
-					<li>${film.length}</li>
-					<li>${film.replacementCost}</li>
-					<li>${film.rating}</li>
-					<li>${film.specialFeatures}</li>
- 					<li>${film.actors}</li>
- 				</ul>
-					<br>
-			</c:forEach>
-		</ul>
+		<c:forEach var="film" items="${films}">
+			<ul>
+				<li>${film.id}</li>
+				<li>${film.title}</li>
+				<li>${film.description}</li>
+				<li>${film.releaseYear}</li>
+				<li>${film.languageId}</li>
+				<li>${film.rentalDuration}</li>
+				<li>${film.rentalRate}</li>
+				<li>${film.length}</li>
+				<li>${film.replacementCost}</li>
+				<li>${film.rating}</li>
+				<li>${film.specialFeatures}</li>
+ 				<li>${film.actors}</li>
+ 			</ul>
+			<br>
+		</c:forEach>
 
 		<p>
-			<a href="index.html" class="btn btn-secondary" role="button">Back
-				to Home</a>
+			<a href="index.html" class="btn btn-secondary" role="button">Back to Home</a>
 		</p>
+		
 	</div>
 </body>
 </html>

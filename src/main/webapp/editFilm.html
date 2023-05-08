@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Films</title>
+<meta charset="UTF-8">
+<title>Edit Film</title>
 </head>
 <body>
-  <h3>Films</h3>
-  <form action="AddFilm.do" method="GET">
-    <h4>Enter film information:</h4>
-    <br>
+<h2>Edit the Film's Details</h2>
+
+<form action="EditFilm.do" method="GET">
     Title: <input type="text" name="title"/> 
     <br>
     Description: <input type="text" name="description"/> 
     <br>
     Release Year: <input type="text" name="releaseYear"/> 
     <br>
-   	Language: [ 1=English | 2=Italian | 3= Japanese | 4=Mandarin | 5=French | 6=German ] 
-   	<input type="text" name="languageId"/> 
+   	Language: <input type="text" name="languageId"/> 
     <br>
     Rental Duration: <input type="text" name="rentalDuration"/> 
     <br>
@@ -28,7 +26,8 @@
     <br>
     Rating: <input type="text" name="rating"/> 
     <br>
-    <input type="submit" value="Send Film Details" />
+    <input type="submit" value="Edit Film Details" />
   </form>
+
 </body>
 </html>

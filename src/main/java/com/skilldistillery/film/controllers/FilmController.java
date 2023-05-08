@@ -19,11 +19,6 @@ public class FilmController {
 	@Autowired
 	private DatabaseAccessor dao;
 	
-	@RequestMapping( path = { "/", "home.do" } )
-	public String home( Model model) {
-		return "WEB-INF/home.jsp";
-	}
-	
 	@RequestMapping( path = "GetFilmById.do", method = RequestMethod.GET, params = "id")
 	public ModelAndView getFilmById(int id) {
 		ModelAndView mv = new ModelAndView();
@@ -57,4 +52,36 @@ public class FilmController {
 		  mv.setViewName("WEB-INF/singleFilm.jsp");
 		  return mv;
 	  }	
+	
+	@RequestMapping( path = "EditFilm.do", method = RequestMethod.GET)
+	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
+		dao.saveFilm(film);
+		redir.addFlashAttribute("film", film);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:filmUpdated.do");
+		return mv;
+	}
+	
+	@RequestMapping(path="filmUpdated.do", method=RequestMethod.GET)
+	  public ModelAndView filmUpdated(Film film) {
+		  ModelAndView mv = new ModelAndView();
+		  mv.setViewName("WEB-INF/editFilm.jsp");
+		  return mv;
+	  }
+	
+	@RequestMapping( path = "DeleteFilm.do", method = RequestMethod.GET, params = "yes")
+	public ModelAndView deleteFilm(Film film, RedirectAttributes redir) {
+		dao.deleteFilm(film);
+		redir.addFlashAttribute("film", film);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:filmDeleted.do");
+		return mv;
+	}
+	
+	@RequestMapping(path="filmDeleted.do", method=RequestMethod.GET)
+	  public ModelAndView filmDeleted(Film film) {
+		  ModelAndView mv = new ModelAndView();
+		  mv.setViewName("WEB-INF/singleFilm.jsp");
+		  return mv;
+	  }
 }
