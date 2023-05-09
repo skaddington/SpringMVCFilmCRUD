@@ -26,19 +26,25 @@
 				<li>${film.replacementCost}</li>
 				<li>${film.rating}</li>
 				<li>${film.specialFeatures}</li>
-				<li>${film.actors}</li>
+				<c:forEach var="actor" items="${film.actors}">
+					<li>${actor}</li>
+				</c:forEach>
 			</ul>
 		</c:when>
 		<c:otherwise>
 			<p>No film found</p>
 		</c:otherwise>
 	</c:choose>
+	
+	<form action="editFilm.do" method=GET>
+		<input type="submit" value="Edit Film Details" name="${film.id}"/>
+	</form>
+	
+	<form action="deleteFilm.do" method=GET>
+		<input type="submit" value="Delete Film" name="${film.id}"/>
+	</form>
 
 	<p>
-		<a href="editFilm.html" class="btn btn-secondary" role="button">Edit this film</a>
-		<br> 
-		<a href="deleteFilm.html" class="btn btn-secondary" role="button">Delete this film</a>
-		<br>
 		<a href="index.html" class="btn btn-secondary" role="button">Back to Home</a>
 	</p>
 

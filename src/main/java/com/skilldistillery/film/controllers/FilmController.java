@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,7 +20,7 @@ public class FilmController {
 	private DatabaseAccessor dao;
 	
 	@RequestMapping( path = "GetFilmById.do", method = RequestMethod.GET, params = "id")
-	public ModelAndView getFilmById(int id) {
+	public ModelAndView getFilmById(@RequestParam("id") int id) {
 		ModelAndView mv = new ModelAndView();
 		Film film = dao.findFilmById(id);
 		mv.setViewName("WEB-INF/singleFilm.jsp");
@@ -54,6 +54,23 @@ public class FilmController {
 	  }	
 	
 	@RequestMapping( path = "editFilm.do", method = RequestMethod.GET)
+	public ModelAndView editFilm(Film film) {
+		System.out.println(film + "in editFilm in Controller");
+		ModelAndView mv = new ModelAndView();
+		film = dao.findFilmById(film.getId());
+		mv.setViewName("WEB-INF/editFilm.jsp");
+		mv.addObject("film", film);
+		System.out.println(mv);
+		return mv;
+	}
+
+	
+	
+	
+	
+	
+	
+	@RequestMapping( path = "UpdateFilm.do", method = RequestMethod.POST)
 	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
 		dao.saveFilm(film);
 		redir.addFlashAttribute("film", film);
@@ -69,7 +86,7 @@ public class FilmController {
 		  return mv;
 	  }
 	
-	@RequestMapping( path = "DeleteFilm.do", method = RequestMethod.GET, params = "yes")
+	@RequestMapping( path = "deleteFilm.do", method = RequestMethod.GET, params = "yes")
 	public ModelAndView deleteFilm(Film film, RedirectAttributes redir) {
 		dao.deleteFilm(film);
 		redir.addFlashAttribute("film", film);

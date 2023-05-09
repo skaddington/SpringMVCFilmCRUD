@@ -33,12 +33,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		Film film = null;
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			String sql = "SELECT film.*, language.name FROM film JOIN language ON film.language_id = language.id WHERE film.id = ?";
+			String sql = "SELECT film.* FROM film WHERE film.id = ?";
 
-			
-			//Category in progress
-			String sql1 = "SELECT film.*, language.name, category.name FROM film JOIN language ON film.language_id = language.id JOIN film_category ON film.id = film_category.film_id JOIN category ON film_category.category_id = category.id WHERE film.id = ?";
-			
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 
@@ -48,14 +44,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String desc = rs.getString("description");
 				int releaseYear = rs.getInt("release_year");
 				int languageId = rs.getInt("language_id");
-				String language = rs.getString("language.name");
 				int rentDur = rs.getInt("rental_duration");
 				double rate = rs.getDouble("rental_rate");
 				int length = rs.getInt("length");
 				double repCost = rs.getDouble("replacement_cost");
 				String rating = rs.getString("rating");
 				String features = rs.getString("special_features");
-				String category = rs.getString("category.name");
 
 				film = new Film(id, title, desc, releaseYear, languageId, rentDur, rate, length, repCost, rating,
 						features);
@@ -74,7 +68,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		List<Film> filmList = new ArrayList<>();
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			String sql = "SELECT film.*, language.name FROM film JOIN language ON film.language_id = language.id WHERE title LIKE ? OR description LIKE ?";
+			String sql = "SELECT film.*  FROM film WHERE title LIKE ? OR description LIKE ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "%" + keyword + "%");
 			stmt.setString(2, "%" + keyword + "%");
@@ -85,7 +79,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String desc = rs.getString("description");
 				int releaseYear = rs.getInt("release_year");
 				int languageId = rs.getInt("language_id");
-				String language = rs.getString("name");
 				int rentDur = rs.getInt("rental_duration");
 				double rate = rs.getDouble("rental_rate");
 				int length = rs.getInt("length");
