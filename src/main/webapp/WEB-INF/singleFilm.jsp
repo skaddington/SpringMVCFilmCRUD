@@ -37,11 +37,14 @@
 	</c:choose>
 	
 	<form action="editFilm.do" method=GET>
-		<input type="submit" value="Edit Film Details" name="${film.id}"/>
+		<input type="submit" value="Edit Film Details"/>
+		<input type="hidden" name="id" value="${film.id }"/>
 	</form>
 	
-	<form action="deleteFilm.do" method=GET>
-		<input type="submit" value="Delete Film" name="${film.id}"/>
+	<form action="deleteFilm.do" method=POST>
+		<input type="submit" value="Delete Film"/>
+		<input type="hidden" name="delete" value="${film.id }"/>
+		
 	</form>
 
 	<p>

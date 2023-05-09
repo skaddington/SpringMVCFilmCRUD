@@ -54,24 +54,17 @@ public class FilmController {
 	  }	
 	
 	@RequestMapping( path = "editFilm.do", method = RequestMethod.GET)
-	public ModelAndView editFilm(Film film) {
-		System.out.println(film + "in editFilm in Controller");
+	public ModelAndView editFilm(int id) {
 		ModelAndView mv = new ModelAndView();
-		film = dao.findFilmById(film.getId());
+		Film film = dao.findFilmById(id);
 		mv.setViewName("WEB-INF/editFilm.jsp");
 		mv.addObject("film", film);
-		System.out.println(mv);
 		return mv;
 	}
 
-	
-	
-	
-	
-	
-	
-	@RequestMapping( path = "UpdateFilm.do", method = RequestMethod.POST)
+	@RequestMapping( path = "updateFilm.do", method = RequestMethod.POST)
 	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
+		System.out.println(film + "in updateFilm in Controller");
 		dao.saveFilm(film);
 		redir.addFlashAttribute("film", film);
 		ModelAndView mv = new ModelAndView();
@@ -82,14 +75,13 @@ public class FilmController {
 	@RequestMapping(path="filmUpdated.do", method=RequestMethod.GET)
 	  public ModelAndView filmUpdated(Film film) {
 		  ModelAndView mv = new ModelAndView();
-		  mv.setViewName("WEB-INF/updatedFilm.jsp");
+		  mv.setViewName("WEB-INF/singleFilm.jsp");
 		  return mv;
 	  }
 	
-	@RequestMapping( path = "deleteFilm.do", method = RequestMethod.GET, params = "yes")
-	public ModelAndView deleteFilm(Film film, RedirectAttributes redir) {
-		dao.deleteFilm(film);
-		redir.addFlashAttribute("film", film);
+	@RequestMapping( path = "deleteFilm.do", method = RequestMethod.POST)
+	public ModelAndView deleteFilm(@RequestParam("delete")int id, RedirectAttributes redir) {
+		dao.deleteFilm(id);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:filmDeleted.do");
 		return mv;
@@ -98,7 +90,7 @@ public class FilmController {
 	@RequestMapping(path="filmDeleted.do", method=RequestMethod.GET)
 	  public ModelAndView filmDeleted(Film film) {
 		  ModelAndView mv = new ModelAndView();
-		  mv.setViewName("WEB-INF/singleFilm.jsp");
+		  mv.setViewName("WEB-INF/deletepage.jsp");
 		  return mv;
 	  }
 }

@@ -13,9 +13,7 @@
 
 <h2>Edit the Film's Details</h2>
 
-<form:form action="editFilm.do" method="GET" modelAttribute="film">
-    <%-- Current Title (${film.title}): <input type="text" name="title"/>  --%>
-    <input type="hidden" value="${film.id }" name="id"/><br>
+<form:form action="updateFilm.do" method="POST">
     <label for="title">Title</label>
     <input type="text" name="title" value="${film.title }"/>
     <br>
@@ -43,7 +41,8 @@
     <label for="rating">Rating</label>
     <input type="text" name="rating" value="${film.rating }"/>
     <br>
-    <input type="submit" value="Edit Film Details" name="editFilm"/>
+		<input type="submit" value="Send Updated Film Details"/>
+		<input type="hidden" name="id" value="${film.id }"/>
   </form:form>
 
 </body>

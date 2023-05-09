@@ -449,10 +449,13 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				updateCount = stmt.executeUpdate();
 				sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
 				stmt = conn.prepareStatement(sql);
-				for (Actor actor : film.getActors()) {
-					stmt.setInt(1, actor.getId());
-					stmt.setInt(2, film.getId());
-					updateCount = stmt.executeUpdate();
+				if (film.getActors() != null && film.getActors().size() > 0) {
+
+					for (Actor actor : film.getActors()) {
+						stmt.setInt(1, actor.getId());
+						stmt.setInt(2, film.getId());
+						updateCount = stmt.executeUpdate();
+					}
 				}
 				conn.commit(); // COMMIT TRANSACTION
 				stmt.close();
@@ -476,28 +479,16 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return true;
 	}
-
 	@Override
-	public boolean deleteFilm(Film film) {
+	public boolean deleteFilm(int id) {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
-
 			conn.setAutoCommit(false); // START TRANSACTION
-
-			String sql = "DELETE FROM film_actor WHERE film_id = ?";
-
+			String sql = "DELETE FROM film WHERE id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, film.getId());
-
+			stmt.setInt(1, id);
 			int updateCount = stmt.executeUpdate();
-
-			sql = "DELETE FROM film WHERE id = ?";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, film.getId());
-			updateCount = stmt.executeUpdate();
-
 			conn.commit(); // COMMIT TRANSACTION
 			stmt.close();
 		} catch (SQLException sqle) {
