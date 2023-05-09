@@ -64,8 +64,7 @@ public class FilmController {
 
 	@RequestMapping( path = "updateFilm.do", method = RequestMethod.POST)
 	public ModelAndView updateFilm(Film film, RedirectAttributes redir) {
-		System.out.println(film + "in updateFilm in Controller");
-		dao.saveFilm(film);
+		dao.updateFilm(film);
 		redir.addFlashAttribute("film", film);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:filmUpdated.do");
@@ -90,7 +89,7 @@ public class FilmController {
 	@RequestMapping(path="filmDeleted.do", method=RequestMethod.GET)
 	  public ModelAndView filmDeleted(Film film) {
 		  ModelAndView mv = new ModelAndView();
-		  mv.setViewName("WEB-INF/deletepage.jsp");
+		  mv.setViewName("WEB-INF/filmDeleted.jsp");
 		  return mv;
 	  }
 }

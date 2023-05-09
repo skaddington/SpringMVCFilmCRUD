@@ -5,18 +5,24 @@
 <title>Films</title>
 </head>
 <body>
-  <h3>Films</h3>
   <form action="AddFilm.do" method="GET">
-    <h4>Enter film information:</h4>
-    <br>
+    <h3>Enter film information:</h3>
+    
     Title: <input type="text" name="title"/> 
     <br>
     Description: <input type="text" name="description"/> 
     <br>
     Release Year: <input type="text" name="releaseYear"/> 
     <br>
-   	Language: [ 1=English | 2=Italian | 3= Japanese | 4=Mandarin | 5=French | 6=German ] 
-   	<input type="text" name="languageId"/> 
+   	Language: 
+   	<select name="languageId" id="languageId-select">
+		<option value="1">English</option>
+		<option value="2">Italian</option>
+		<option value="3">Japanese</option>
+		<option value="4">Mandarin</option>
+		<option value="5">French</option>
+		<option value="6">German</option>
+	</select>
     <br>
     Rental Duration: <input type="text" name="rentalDuration"/> 
     <br>
@@ -26,8 +32,18 @@
     <br>
     Replacement Cost: <input type="text" name="replacementCost"/> 
     <br>
-    Rating: <input type="text" name="rating"/> 
-    <br>
+    Rating: 
+    <input type="radio" id="G" name="rating" value="G">
+    <label for="G">G</label>
+    <input type="radio" id="PG" name="rating" value="PG">
+    <label for="PG">PG</label>
+    <input type="radio" id="PG13" name="rating" value="PG13">
+    <label for="PG13">PG13</label>
+    <input type="radio" id="R" name="rating" value="R">
+    <label for="R">R</label>
+    <input type="radio" id="NC17" name="rating" value="NC17">
+    <label for="NC17">NC17</label>
+    <br><br>
     <input type="submit" value="Send Film Details" />
   </form>
 </body>

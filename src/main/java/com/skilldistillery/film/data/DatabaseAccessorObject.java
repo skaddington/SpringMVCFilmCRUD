@@ -69,9 +69,11 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			String sql = "SELECT film.*  FROM film WHERE title LIKE ? OR description LIKE ?";
+			
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "%" + keyword + "%");
 			stmt.setString(2, "%" + keyword + "%");
+			
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("id");
@@ -136,7 +138,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-
 			String sql = "SELECT * FROM actor WHERE id = ?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -203,7 +204,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
-
 			conn.setAutoCommit(false); // START TRANSACTION
 
 			String sql = "INSERT INTO actor (first_name, last_name) " + " VALUES (?,?)";
@@ -259,10 +259,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
-
 			conn.setAutoCommit(false); // START TRANSACTION
 
-			String sql = "UPDATE actor SET first_name=?, last_name=? " + " WHERE id=?";
+			String sql = "UPDATE actor SET first_name=?, last_name=? WHERE id=?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, actor.getFirstName());
@@ -312,21 +311,14 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
-
 			conn.setAutoCommit(false); // START TRANSACTION
 
-			String sql = "DELETE FROM film_actor WHERE actor_id = ?";
+			String sql = "DELETE FROM actor WHERE id = ?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, actor.getId());
 
 			int updateCount = stmt.executeUpdate();
-
-			sql = "DELETE FROM actor WHERE id = ?";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, actor.getId());
-			updateCount = stmt.executeUpdate();
 
 			conn.commit(); // COMMIT TRANSACTION
 			stmt.close();
@@ -414,11 +406,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public boolean saveFilm(Film film) {
+	public boolean updateFilm(Film film) {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
-
 			conn.setAutoCommit(false); // START TRANSACTION
 
 			String sql = "UPDATE film SET title=?, description=?, release_year=?, language_id=?, rental_duration=?, rental_rate=?, length=?, replacement_cost=?, rating=? WHERE id=?";
@@ -435,11 +426,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			stmt.setString(9, film.getRating());
 			stmt.setInt(10, film.getId());
 
-			System.out.println("Prepared Statement/Bind works");
-
 			int updateCount = stmt.executeUpdate();
-
-			System.out.println("executeUpdate works");
 
 			if (updateCount == 1) {
 				// Replace actor's film list
@@ -485,10 +472,14 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
 			conn.setAutoCommit(false); // START TRANSACTION
+			
 			String sql = "DELETE FROM film WHERE id = ?";
+			
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
+			
 			int updateCount = stmt.executeUpdate();
+			
 			conn.commit(); // COMMIT TRANSACTION
 			stmt.close();
 		} catch (SQLException sqle) {
