@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -21,9 +22,9 @@
 				<li>Release Year: ${film.releaseYear}</li>
 				<li>Language Id: ${film.languageId}</li>
 				<li>Rental Duration: ${film.rentalDuration}</li>
-				<li>Rental Rate: ${film.rentalRate}</li>
+				<li>Rental Rate: <fmt:formatNumber type="currency" value="${film.rentalRate}"/></li>
 				<li>Length (in minutes): ${film.length}</li>
-				<li>Replacement Cost: ${film.replacementCost}</li>
+				<li>Replacement Cost: <fmt:formatNumber type="currency" value="${film.replacementCost}"/></li>
 				<li>Rating: ${film.rating}</li>
 				<li>Special Features: ${film.specialFeatures}</li>
 				<li>Actors: </li>

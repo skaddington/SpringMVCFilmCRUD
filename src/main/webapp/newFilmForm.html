@@ -8,11 +8,11 @@
   <form action="AddFilm.do" method="GET">
     <h3>Enter film information:</h3>
     
-    Title: <input type="text" name="title"/> 
+    Title: <input type="text" name="title" required/> 
     <br>
-    Description: <input type="text" name="description"/> 
+    Description: <input type="text" name="description" required/> 
     <br>
-    Release Year: <input type="text" name="releaseYear"/> 
+    Release Year: <input type="text" name="releaseYear"required/> 
     <br>
    	Language: 
    	<select name="languageId" id="languageId-select">
@@ -24,16 +24,16 @@
 		<option value="6">German</option>
 	</select>
     <br>
-    Rental Duration: <input type="text" name="rentalDuration"/> 
+    Rental Duration: <input type="text" name="rentalDuration" required/> 
     <br>
-    Rental Rate: <input type="text" name="rentalRate"/> 
+    Rental Rate: <input type="text" name="rentalRate" required/> 
     <br>
-    Length: <input type="text" name="length"/> 
+    Length: <input type="text" name="length" required/> 
     <br>
-    Replacement Cost: <input type="text" name="replacementCost"/> 
+    Replacement Cost: <input type="text" name="replacementCost" required/> 
     <br>
     Rating: 
-    <input type="radio" id="G" name="rating" value="G">
+    <input type="radio" id="G" name="rating" value="G" required>
     <label for="G">G</label>
     <input type="radio" id="PG" name="rating" value="PG">
     <label for="PG">PG</label>
