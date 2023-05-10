@@ -14,25 +14,17 @@
 - **User Story #2 :** 
 <p> From the home page, the user may also choose to add a film to the database. This utilizes a HTML form where the user can add the film's details. Once the submit button is initiated, the information is filtered into the appropriate method in the Controller and sent to the DAO to be added to the database using an INSERT statement to the film table. If the insert was successful, the film's details are displayed to the user with it's newly assigned id.
 
-- (NEED TO DO : IF FAILS TO ADD FILM)
-
 - **User Story #3 :** 
 <p> When a film's details are displayed, the user has the option of deleting the film from the database. This is achieved with a submit button which passes the film's id (hidden) to the deleteFilm method in the Controller. The DAO takes in the id and uses it in a DELETE statement. If the deletion is successful, the user is notified. They can lookup the film again and confirm that it is no more.
 
-- (NEED TO DO : IF FAILS TO DELETE FILM)
-
 - **User Story #4 :** 
 <p> While the film's details are displayed, the user also has the option to update those details in the database. This is also achieved by use of the hidden id and submit button. The user is presented with a form that has the current values entered, so the user only has to input what they wish to update. When the user submits the edited information, the film is sent into the updateFilm method in the Controller and the DAO is called to updateFilm using an UPDATE statement. If the update was successful, the film's details are displayed once again to the user.
-
-- (NEED TO DO : IF FAILS TO EDIT FILM)
 
 - **User Story #5 :** 
 <p> Another option on the home page lets the user input a keyword to search through the film's titles and descriptions. This is similar to searching by id except the bind in the DAO uses Regular Expression (REGEX) when substituting in the user's input. Also, this time we are using two bindings rather than one. The result is much the same as well: if a film's title or description contains the keyword, that film's details will print, otherwise, "No such film found" is returned. If the film is found, the user has the option to edit or delete the film.
 
 - **User Story #6 :** 
-<p> Include actors and category in film details
-
-- (NEED TO DO)
+<p> Including the category of the film and the actors in it can be viewed as well. Using additional retrieval methods in the DAO, we can pass in the film's id and a SELECT statement using ON-common fields JOINing to other tables. The result is then returned to the caller and assigned to the appropriate field using a setter which we added to the Film object class. The user can now view the category and a list of actors (if there are any) when viewing the details of the film.
 
 ## Technologies Used
 * MySQL, CRUD
