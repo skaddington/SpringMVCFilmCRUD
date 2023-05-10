@@ -2,49 +2,62 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Films</title>
+<title>Add a Film</title>
 </head>
 <body>
-  <form action="AddFilm.do" method="GET">
-    <h3>Enter film information:</h3>
-    
-    Title: <input type="text" name="title" required/> 
-    <br>
-    Description: <input type="text" name="description" required/> 
-    <br>
-    Release Year: <input type="text" name="releaseYear"required/> 
-    <br>
-   	Language: 
-   	<select name="languageId" id="languageId-select">
-		<option value="1">English</option>
-		<option value="2">Italian</option>
-		<option value="3">Japanese</option>
-		<option value="4">Mandarin</option>
-		<option value="5">French</option>
-		<option value="6">German</option>
-	</select>
-    <br>
-    Rental Duration: <input type="text" name="rentalDuration" required/> 
-    <br>
-    Rental Rate: <input type="text" name="rentalRate" required/> 
-    <br>
-    Length: <input type="text" name="length" required/> 
-    <br>
-    Replacement Cost: <input type="text" name="replacementCost" required/> 
-    <br>
-    Rating: 
-    <input type="radio" id="G" name="rating" value="G" required>
-    <label for="G">G</label>
-    <input type="radio" id="PG" name="rating" value="PG">
-    <label for="PG">PG</label>
-    <input type="radio" id="PG13" name="rating" value="PG13">
-    <label for="PG13">PG13</label>
-    <input type="radio" id="R" name="rating" value="R">
-    <label for="R">R</label>
-    <input type="radio" id="NC17" name="rating" value="NC17">
-    <label for="NC17">NC17</label>
-    <br><br>
-    <input type="submit" value="Send Film Details" />
-  </form>
+
+	<h2>Enter film information:</h2>
+	
+	<div class="container">
+		<form action="AddFilm.do" method="GET">
+		    
+		    <label for="title">Title: </label>
+			<input type="text" name="title" required/> 
+			<br>
+		    <label for="description">Description: </label>
+			<input type="text" name="description" required/> 
+			<br>
+		    <label for="releaseYear">Release Year: </label>
+			<input type="text" name="releaseYear"required/> 
+			<br>
+		    <label for="language">Language: </label>
+			<select name="languageId" id="languageId-select">
+				<option value="1">English</option>
+				<option value="2">Italian</option>
+				<option value="3">Japanese</option>
+				<option value="4">Mandarin</option>
+				<option value="5">French</option>
+				<option value="6">German</option>
+			</select>
+			<br>
+		    <label for="rentalDuration">Rental Duration: </label>
+			<input type="text" name="rentalDuration" required/> 
+			<br>
+		    <label for="rentalRate">Rental Rate: </label>
+			<input type="text" name="rentalRate" required/> 
+			<br>
+		    <label for="length">Length: </label>
+			<input type="text" name="length" required/> 
+			<br>
+		    <label for="replacementCost">Replacement Cost: </label>
+			<input type="text" name="replacementCost" required/> 
+			<br>
+		    <label for="rating">Rating: </label>
+				<input type="radio" id="G" name="rating" value="G" required>
+				<label for="G">G</label>
+				<input type="radio" id="PG" name="rating" value="PG">
+				<label for="PG">PG</label>
+				<input type="radio" id="PG13" name="rating" value="PG13">
+				<label for="PG13">PG13</label>
+				<input type="radio" id="R" name="rating" value="R">
+				<label for="R">R</label>
+				<input type="radio" id="NC17" name="rating" value="NC17">
+				<label for="NC17">NC17</label>
+			<br><br>
+			<input type="submit" value="Submit Film Details" />
+			
+		</form>
+	</div>
+	
 </body>
 </html>

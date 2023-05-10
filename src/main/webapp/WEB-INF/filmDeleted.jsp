@@ -7,8 +7,11 @@
 <title>Film Deleted</title>
 </head>
 <body>
-<h3>The film has been deleted successfully............</h3>
-<p>
+	<h2>The film is gone.....gone forever.....</h2>
+
+	<h4>.....I hope you're not gonna regret that.....</h4>
+	
+	<p>
 		<a href="index.html" class="btn btn-secondary" role="button">Back to Home</a>
 	</p>
 

@@ -7,25 +7,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Spring MVC Film Site</title>
+<title>Film By Id</title>
 </head>
 <body>
 
-	<h1>MVC Film Site</h1>
 
 	<c:choose>
 		<c:when test="${! empty film}">
+		
+		<h2>Film found with an Id of : ${film.id}</h2>
+	
 			<ul>
-				<li>Id: ${film.id}</li>
 				<li>Title: ${film.title}</li>
 				<li>Description: ${film.description}</li>
 				<li>Release Year: ${film.releaseYear}</li>
-				<li>Language Id: ${film.languageId}</li>
+				<%-- <li>Language Id: ${film.languageId}</li> --%>
+				<li>Language: ${film.languageName} ( Id: ${film.languageId} )</li>
 				<li>Rental Duration: ${film.rentalDuration}</li>
 				<li>Rental Rate: <fmt:formatNumber type="currency" value="${film.rentalRate}"/></li>
 				<li>Length (in minutes): ${film.length}</li>
 				<li>Replacement Cost: <fmt:formatNumber type="currency" value="${film.replacementCost}"/></li>
 				<li>Rating: ${film.rating}</li>
+				<li>Category: ${film.category}</li>
 				<li>Special Features: ${film.specialFeatures}</li>
 				<li>Actors: </li>
 				<ul>
@@ -34,22 +37,24 @@
 					</c:forEach>
 				</ul>
 			</ul>
+			
+			<form action="editFilm.do" method=GET>
+				<input type="submit" value="Edit ${film.title}"/>
+				<input type="hidden" name="id" value="${film.id }"/>
+			</form>
+			<br>
+			<form action="deleteFilm.do" method=POST>
+				<input type="submit" value="Delete ${film.title}"/>
+				<input type="hidden" name="delete" value="${film.id }"/>
+				
+			</form>
 		</c:when>
 		<c:otherwise>
-			<p>No film found</p>
+			<p>
+				<h2>No film found</h2>
+			</p>
 		</c:otherwise>
 	</c:choose>
-	
-	<form action="editFilm.do" method=GET>
-		<input type="submit" value="Edit Film Details"/>
-		<input type="hidden" name="id" value="${film.id }"/>
-	</form>
-	<br>
-	<form action="deleteFilm.do" method=POST>
-		<input type="submit" value="Delete Film"/>
-		<input type="hidden" name="delete" value="${film.id }"/>
-		
-	</form>
 
 	<p>
 		<a href="index.html" class="btn btn-secondary" role="button">Back to Home</a>

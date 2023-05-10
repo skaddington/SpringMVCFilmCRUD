@@ -54,6 +54,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				film = new Film(id, title, desc, releaseYear, languageId, rentDur, rate, length, repCost, rating,
 						features);
 				film.setActors(findActorsByFilmId(id));
+				film.setLanguageName(findLanguageNameByFilmId(id));
+				film.setCategory(findCategoryByFilmId(id));
 			}
 			rs.close();
 			stmt.close();
@@ -69,11 +71,11 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			String sql = "SELECT film.*  FROM film WHERE title LIKE ? OR description LIKE ?";
-			
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "%" + keyword + "%");
 			stmt.setString(2, "%" + keyword + "%");
-			
+
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("id");
@@ -92,6 +94,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 						features);
 				filmList.add(film);
 				film.setActors(findActorsByFilmId(id));
+				film.setLanguageName(findLanguageNameByFilmId(id));
+				film.setCategory(findCategoryByFilmId(id));
 			}
 			rs.close();
 			stmt.close();
@@ -197,6 +201,52 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			e.printStackTrace();
 		}
 		return films;
+	}
+	
+	@Override
+	public String findLanguageNameByFilmId(int id) {
+		String languageName = "";
+		try {
+			Connection conn = DriverManager.getConnection(URL, USER, PASS);
+			String sql = "SELECT name FROM language JOIN film ON film.language_id = language.id WHERE film.id = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				languageName = rs.getString("name");
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return languageName;
+	}
+	
+	@Override
+	public String findCategoryByFilmId(int id) {
+		String category = "";
+		try {
+			Connection conn = DriverManager.getConnection(URL, USER, PASS);
+			String sql = "SELECT name FROM category JOIN film_category ON category.id = film_category.category_id JOIN film ON film_category.film_id = film.id WHERE film.id = ?";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				category = rs.getString("name");
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return category;
 	}
 
 	@Override
@@ -429,21 +479,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			int updateCount = stmt.executeUpdate();
 
 			if (updateCount == 1) {
-				// Replace actor's film list
-				sql = "DELETE FROM film WHERE id = ?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, film.getId());
-				updateCount = stmt.executeUpdate();
-				sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
-				stmt = conn.prepareStatement(sql);
-				if (film.getActors() != null && film.getActors().size() > 0) {
-
-					for (Actor actor : film.getActors()) {
-						stmt.setInt(1, actor.getId());
-						stmt.setInt(2, film.getId());
-						updateCount = stmt.executeUpdate();
-					}
-				}
 				conn.commit(); // COMMIT TRANSACTION
 				stmt.close();
 			}
@@ -466,20 +501,21 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return true;
 	}
+
 	@Override
 	public boolean deleteFilm(int id) {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
 			conn.setAutoCommit(false); // START TRANSACTION
-			
+
 			String sql = "DELETE FROM film WHERE id = ?";
-			
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
-			
+
 			int updateCount = stmt.executeUpdate();
-			
+
 			conn.commit(); // COMMIT TRANSACTION
 			stmt.close();
 		} catch (SQLException sqle) {

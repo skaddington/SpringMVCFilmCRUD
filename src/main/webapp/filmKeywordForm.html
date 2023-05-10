@@ -2,14 +2,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Films</title>
+<title>Search by Keyword</title>
 </head>
 <body>
-  <h3>Films</h3>
-  <form action="GetFilmByKeyword.do" method="GET">
-    Keyword: 
-    <input type="text" name="keyword"/> 
-    <input type="submit" value="Get Film Details" />
-  </form>
+
+	<h2>Search for a film by a keyword</h2>
+	
+	<div class="container">
+		<form action="GetFilmByKeyword.do" method="GET">
+			<label for="keyword">Keyword: </label> 
+			<input type="text" name="keyword"/> 
+			<input type="submit" value="Get Film Details" />
+		</form>
+	</div>
+	
 </body>
 </html>
